@@ -1,5 +1,5 @@
 // src/redux/slices/resumeSlice.ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 export interface Resume {
   id?: string;

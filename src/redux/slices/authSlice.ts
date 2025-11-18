@@ -3,13 +3,22 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "firebase/auth";
 
 interface AuthState {
-  user: User | null;
+  user: any | null;
   loading: boolean;
   error: string | null;
 }
 
+const mockUser = {
+  "id": "U001",
+  "fullName": "Ahmed Ali",
+  "email": "ahmed@example.com",
+  "passwordHash": "$2a$10$T5sd832H...",
+  "avatar": "https://example.com/avatars/ahmed.png",
+  "createdAt": "2025-01-12"
+}
+
 const initialState: AuthState = {
-  user: null,
+  user: mockUser,
   loading: false,
   error: null,
 };
