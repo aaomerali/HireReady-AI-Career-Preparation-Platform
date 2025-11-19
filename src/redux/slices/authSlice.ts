@@ -8,7 +8,7 @@ interface AuthState {
   error: string | null;
 }
 
-const mockUser = {
+ /* const mockUser = {
   "id": "U001",
   "fullName": "Ahmed Ali",
   "email": "ahmed@example.com",
@@ -16,9 +16,10 @@ const mockUser = {
   "avatar": "https://example.com/avatars/ahmed.png",
   "createdAt": "2025-01-12"
 }
+*/
 
 const initialState: AuthState = {
-  user: mockUser,
+  user: null,
   loading: false,
   error: null,
 };
