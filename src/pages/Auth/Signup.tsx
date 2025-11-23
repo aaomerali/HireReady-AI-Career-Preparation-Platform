@@ -8,6 +8,7 @@ import {
 } from "../../redux/slices/authSlice";
 import type { RootState } from "../../redux/store";
 import { useNavigate, Link } from "react-router-dom";
+import '../../index.css'
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ export default function Signup() {
           {/* Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-accent text-white rounded-lg font-semibold
+            className="w-full py-3 bg-[var(--color-primary)] text-white rounded-lg font-semibold
                        hover:opacity-90 transition"
           >
             {loading ? "Creating..." : "Sign Up"}
