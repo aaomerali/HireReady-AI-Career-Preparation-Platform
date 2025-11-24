@@ -15,7 +15,7 @@ const Landing = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center shadow-md">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-lg md:text-xl">HR</span>
               </div>
               <span className="text-lg md:text-xl font-bold">HireReady</span>
@@ -39,7 +39,7 @@ const Landing = () => {
             {/* Buttons */}
             <div className="hidden lg:flex gap-4">
               <Link to="/login" className="hidden md:block px-4 py-2 rounded-md hover:bg-[hsl(210,40%,96.1%)] transition-colors font-medium">Log In</Link>
-              <Link to="/signup" className="px-4 md:px-6 py-2 text-sm md:text-base rounded-md bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-md hover:shadow-lg transition-shadow">Sign Up</Link>
+              <Link to="/signup" className="px-4 md:px-6 py-2 text-sm md:text-base rounded-md bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-md hover:shadow-lg transition-shadow">Sign Up</Link>
             </div>
           </div>
         </div>
@@ -53,17 +53,17 @@ const Landing = () => {
 
             <div className="flex gap-3 pt-2">
               <button className="flex-1 py-2 rounded-md bg-[hsl(210,40%,96.1%)] font-medium">Log In</button>
-              <button className="flex-1 py-2 rounded-md bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-md">Sign Up</button>
+              <button className="flex-1 py-2 rounded-md bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-md">Sign Up</button>
             </div>
           </div>
         )}
       </header>
 
       {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-12 md:pb-20 bg-gradient-to-b from-[hsl(210,40%,96.1%)] to-white">
+      <section className="pt-24 md:pt-32 pb-12 md:pb-20 bg-linear-to-b from-[hsl(210,40%,96.1%)] to-white">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="text-center lg:text-left">
-            <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white text-sm font-semibold mb-6">
+            <div className="inline-block px-4 py-2 rounded-full bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white text-sm font-semibold mb-6">
               #1 AI Interview Preparation Platform
             </div>
 
@@ -76,7 +76,7 @@ const Landing = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-              <Link to="/signup" className="px-8 py-3 rounded-lg bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-lg hover:shadow-xl transition-shadow">Get Started Free</Link>
+              <Link to="/signup" className="px-8 py-3 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-lg hover:shadow-xl transition-shadow">Get Started Free</Link>
               <Link to="/signup" className="px-8 py-3 rounded-lg border border-[hsl(214.3,31.8%,91.4%)] bg-white font-semibold hover:bg-[hsl(210,40%,96.1%)] transition-colors">Watch Demo</Link>
             </div>
 
@@ -177,7 +177,7 @@ const Landing = () => {
               desc: "Apply with confidence and land your dream job"
             }].map((item, idx) => (
               <div key={idx} className="text-center">
-                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white text-3xl font-bold flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white text-3xl font-bold flex items-center justify-center mx-auto mb-6 shadow-lg">
                   {item.step}
                 </div>
                 <h3 className="text-xl md:text-2xl font-bold mb-2">{item.title}</h3>
@@ -206,7 +206,7 @@ const Landing = () => {
               ))}
             </div>
 
-            <Link to="/signup" className="px-8 py-3 rounded-lg bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-lg hover:shadow-xl transition-shadow">Start Your Free Trial</Link>
+            <Link to="/signup" className="px-8 py-3 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white font-semibold shadow-lg hover:shadow-xl transition-shadow">Start Your Free Trial</Link>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
@@ -224,7 +224,7 @@ const Landing = () => {
               label: "Platform Access"
             }].map((stat, idx) => (
               <div key={idx} className="p-8 rounded-xl bg-white border border-[hsl(214.3,31.8%,91.4%)] text-center shadow-sm">
-                <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] bg-clip-text text-transparent mb-2">
+                <div className="text-3xl sm:text-4xl font-bold bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] bg-clip-text text-transparent mb-2">
                   {stat.value}
                 </div>
                 <div className="text-sm text-[hsl(217,19%,27%)]">{stat.label}</div>
@@ -235,7 +235,7 @@ const Landing = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-14 md:py-20 bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white text-center">
+      <section className="py-14 md:py-20 bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-white text-center">
         <div className="max-w-7xl mx-auto px-4">
           <div className="inline-block px-4 py-2 rounded-full bg-white/20 text-sm font-semibold mb-6">
             Limited Time Offer
@@ -268,7 +268,7 @@ const Landing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div className="md:col-span-2 text-center md:text-left">
               <div className="flex items-center gap-2 mb-4 justify-center md:justify-start">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center">
                   <span className="font-bold text-xl">HR</span>
                 </div>
                 <span className="text-xl font-bold">HireReady</span>
