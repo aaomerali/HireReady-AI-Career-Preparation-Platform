@@ -2,24 +2,19 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "firebase/auth";
 
+
+
+const storedUser = localStorage.getItem("user");
+const initialUser: User | null = storedUser ? JSON.parse(storedUser) : null
 interface AuthState {
-  user: any | null;
+  user: User | null;
   loading: boolean;
   error: string | null;
 }
 
- /* const mockUser = {
-  "id": "U001",
-  "fullName": "Ahmed Ali",
-  "email": "ahmed@example.com",
-  "passwordHash": "$2a$10$T5sd832H...",
-  "avatar": "https://example.com/avatars/ahmed.png",
-  "createdAt": "2025-01-12"
-}
-*/
 
 const initialState: AuthState = {
-  user: null,
+  user: initialUser,
   loading: false,
   error: null,
 };
@@ -31,6 +26,7 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
       state.loading = false;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     setAuthLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -41,6 +37,7 @@ const authSlice = createSlice({
     },
     logoutUser: (state) => {
       state.user = null;
+      localStorage.removeItem("user");
     },
   },
 });
