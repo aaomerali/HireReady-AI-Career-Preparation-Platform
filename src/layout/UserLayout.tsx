@@ -9,7 +9,7 @@ export default function UserLayout() {
       <Navbar />
 
       {/* Page Content */}
-      <main className="p-6 flex-1">
+      <main className="p-6 ">
         <Outlet />
       </main>
     </div>

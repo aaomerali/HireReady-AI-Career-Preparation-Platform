@@ -1,33 +1,25 @@
-import { logout } from "../../firebase/auth";
-import {
-  setAuthLoading,
-  setAuthError,
-  setUser,
-} from "../../redux/slices/authSlice";
-import { useDispatch} from "react-redux";
-import { useNavigate} from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+
 
 
 
 function Dashboard() {
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
+  const user = useSelector((state: RootState) => state.auth.user);
+
 
   const handlelogout = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(setAuthLoading(true));
-    dispatch(setAuthError(null));
+   
 
     try {
-      logout();
-      dispatch(setUser(null));
-      navigate("/login");
+      console.log(user)
     } catch (err: any) {
-      dispatch(setAuthError(err.message));
-    } finally {
-      dispatch(setAuthLoading(false));
+      console.log(err)
     }
   };
 

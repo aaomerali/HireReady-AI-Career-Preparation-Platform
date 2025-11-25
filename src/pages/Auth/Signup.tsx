@@ -47,7 +47,7 @@ export default function SignUp() {
         <div className="rounded-2xl p-6 sm:p-8 shadow-2xl bg-[hsl(220,26%,18%)]">
           {/* Logo */}
           <div className="flex justify-center mb-6 sm:mb-8">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center shadow-lg bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)]">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center shadow-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)]">
               <span className="text-white font-bold text-xl sm:text-2xl">HR</span>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function SignUp() {
             {/* Sign Up Button */}
             <Button
               type="submit"
-              className="w-full h-11 sm:h-12 text-base sm:text-lg font-semibold rounded-lg transform hover:scale-105 transition-all duration-300 bg-gradient-to-r from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-[hsl(210,40%,98%)] hover:shadow-lg"
+              className="w-full h-11 sm:h-12 text-base sm:text-lg font-semibold rounded-lg transform hover:scale-105 transition-all duration-300 bg-linear-to-r from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] text-[hsl(210,40%,98%)] hover:shadow-lg"
             >
               {loading ? "Creating..." : "Create Account"}
             </Button>

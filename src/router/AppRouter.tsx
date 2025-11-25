@@ -28,7 +28,7 @@ import CreateInterview from "../pages/Interview/CreateInterview";
 import InterviewPreparation from "../pages/Interview/InterviewPreparation";
 import StartInterview from "../pages/Interview/StartInterview";
 import InterviewEvaluation from "../pages/Interview/InterviewEvaluation";
-import AllInterviews from "../pages/Interview/Allinterviews";
+import AllInterviews from "../pages/Interview/AllInterviews";
 import InterviewDetails from "../pages/Interview/InterviewDetails";
 
 
@@ -66,6 +66,8 @@ export default function AppRouter() {
           <Route path="interview/evaluation" element={<InterviewEvaluation />} />
           <Route path="interview/all" element={<AllInterviews />} />
           <Route path="interview/:id" element={<InterviewDetails />} />
+
+
         </Route>
       </Routes>
     </BrowserRouter>
