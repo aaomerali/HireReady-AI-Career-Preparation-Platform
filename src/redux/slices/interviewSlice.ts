@@ -1,61 +1,59 @@
-// src/redux/slices/interviewSlice.ts
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  fetchInterviews,
+  fetchInterviewById,
+  createInterview,
+  updateInterview,
+  deleteInterview,
+} from "../../api/interviewsApi";
+import type { InterviewsState } from "../../types/interview";
 
-export interface Interview {
-  id?: string;
-  title: string;
-  jobLevel: string;
-  questions: string[];
-  answers?: string[];
-  score?: number;
-  createdAt: string;
-}
-
-interface InterviewState {
-  interviews: Interview[];
-  currentInterview: Interview | null;
-  loading: boolean;
-}
-
-const initialState: InterviewState = {
+const initialState: InterviewsState = {
   interviews: [],
-  currentInterview: null,
+  selected: null,
   loading: false,
+  error: null,
 };
 
-const interviewSlice = createSlice({
-  name: "interview",
+const interviewsSlice = createSlice({
+  name: "interviews",
   initialState,
-  reducers: {
-    setInterviews: (state, action: PayloadAction<Interview[]>) => {
-      state.interviews = action.payload;
-    },
-    addInterview: (state, action: PayloadAction<Interview>) => {
-      state.interviews.push(action.payload);
-    },
-    setCurrentInterview: (state, action: PayloadAction<Interview | null>) => {
-      state.currentInterview = action.payload;
-    },
-    updateInterview: (state, action: PayloadAction<Interview>) => {
-      const index = state.interviews.findIndex(
-        (i) => i.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.interviews[index] = action.payload;
-      }
-    },
-    setInterviewLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      // Fetch all
+      .addCase(fetchInterviews.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchInterviews.fulfilled, (state, action) => {
+        state.loading = false;
+        state.interviews = action.payload;
+      })
+
+      // Fetch one
+      .addCase(fetchInterviewById.fulfilled, (state, action) => {
+        state.selected = action.payload;
+      })
+
+      // Create
+      .addCase(createInterview.fulfilled, (state, action) => {
+        state.interviews.push(action.payload);
+      })
+
+      // Update
+      .addCase(updateInterview.fulfilled, (state, action) => {
+        state.interviews = state.interviews.map((item) =>
+          item.id === action.payload.id ? action.payload.data : item
+        );
+      })
+
+      // Delete
+      .addCase(deleteInterview.fulfilled, (state, action) => {
+        state.interviews = state.interviews.filter(
+          (item) => item.id !== action.payload
+        );
+      });
   },
 });
 
-export const {
-  setInterviews,
-  addInterview,
-  setCurrentInterview,
-  updateInterview,
-  setInterviewLoading,
-} = interviewSlice.actions;
-
-export default interviewSlice.reducer;
+export default interviewsSlice.reducer;
