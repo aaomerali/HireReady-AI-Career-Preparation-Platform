@@ -61,6 +61,7 @@ export default function AppRouter() {
 
           {/* Interviews */}
           <Route path="interview/create" element={<CreateInterview />} />
+          <Route path="interview/create/:interviewId" element={<CreateInterview />} />
           <Route path="interview/preparation" element={<InterviewPreparation />} />
           <Route path="interview/start" element={<StartInterview />} />
           <Route path="interview/evaluation" element={<InterviewEvaluation />} />
