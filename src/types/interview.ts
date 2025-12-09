@@ -12,7 +12,7 @@ export interface Interview {
   experience: number;
   userId: string | undefined;
   techStack: string;
-  questions: Question[];
+  questions: { question: string; answer: string }[];
   createdAt: Timestamp | Date;
   updateAt: Timestamp | Date;
 }
