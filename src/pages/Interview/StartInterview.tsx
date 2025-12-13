@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 
 import type { AIResponse } from "../../types/interview";
-import { SavedModel } from "../../components/Interviews/SaveModal";
+import { SavedModel } from "../../components/Interviews/SavedModel";
 
 const InterviewPage = () => {
   // Redux Hooks
@@ -289,6 +289,7 @@ const InterviewPage = () => {
 
   // 3. Save Answer using Thunk
   const saveAnswer = async () => {
+    setSaveModalOpen(false);
     if (isCurrentQuestionSaved) {
       window.alert("This question has already been saved and cannot be modified.");
       return;
@@ -325,7 +326,7 @@ const InterviewPage = () => {
       setSavedQuestionsIndices(p => [...p, activeIndexState]);
 
       window.alert("Saved successfully. You cannot re-answer this question.");
-      setSaveModalOpen(false);
+      
 
       if (activeIndexState < (interview.questions.length - 1)) {
         setActiveIndex(activeIndexState + 1);
@@ -333,7 +334,7 @@ const InterviewPage = () => {
 
     } catch (err: any) {
       console.error("Save error:", err);
-      if (err.message && err.message.includes("DuplicateAnswerError")) {
+      if (err.message) {
         window.alert(err.message);
         setSavedQuestionsIndices(p => [...p, activeIndexState]);
       } else {

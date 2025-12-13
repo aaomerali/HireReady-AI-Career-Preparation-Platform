@@ -33,7 +33,8 @@ export interface UserAnswerData {
     feedback: string;
     rating: number; 
     userId: string | null;
-    createdAt: any; // يستخدم serverTimestamp في Firebase
+    createdAt: any; 
+    questionIndex: number;
 }
 
 export interface AIResponse {

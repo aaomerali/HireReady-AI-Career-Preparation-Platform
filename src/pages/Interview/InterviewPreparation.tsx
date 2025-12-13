@@ -51,7 +51,7 @@ const InterviewPreparation = () => {
           <h3 className="font-semibold text-lg mb-1">⚠️ Important Information</h3>
           <p className="text-sm leading-relaxed">
             Please enable your webcam and microphone to start the AI-generated
-            mock interview. The interview consists of five questions. You’ll
+            mock interview. You’ll
             receive a personalized report based on your responses at the end.
           </p>
         </div>

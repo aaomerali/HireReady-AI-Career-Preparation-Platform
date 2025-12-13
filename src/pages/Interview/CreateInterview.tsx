@@ -164,7 +164,7 @@ const CreateInterview = () => {
         await dispatch(createInterview( interviewData ));
                 
       }
-      navigate("/dashboard");
+      navigate("/interview");
     } catch (error) {
       setError("An error occurred while saving the interview");
     } finally {
