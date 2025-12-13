@@ -24,3 +24,20 @@ export interface InterviewsState {
   loading: boolean;
   error: string | null;
 }
+
+export interface UserAnswerData {
+    mockIdRef: string; 
+    question: string;
+    correct_ans: string;
+    user_ans: string;
+    feedback: string;
+    rating: number; 
+    userId: string | null;
+    createdAt: any; // يستخدم serverTimestamp في Firebase
+}
+
+export interface AIResponse {
+  rating: number;
+  feedback: string;
+}
+
