@@ -8,6 +8,7 @@ import {
   setUser,
 } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
+import logo from '../../assets/logo.png'
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -61,10 +62,10 @@ function Navbar() {
 
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center shadow-md">
-              <span className="text-white font-bold text-lg md:text-xl">HR</span>
+            <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center ">
+              <img src={logo} alt="logo" />
             </div>
-            <span className="text-lg md:text-xl font-bold">HireReady</span>
+            <h1 className="text-lg md:text-xl font-bold text-gray-700"><span className="text-[#4589f7]">Hire</span>Ready</h1>
           </div>
 
           {/* Desktop Nav */}

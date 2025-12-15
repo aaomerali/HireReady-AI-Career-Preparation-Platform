@@ -1,6 +1,11 @@
 import { useState } from "react";
 import '../index.css'
 import { Link } from "react-router-dom";
+import logo from '../assets/logo.png'
+import whiteLogo from '../assets/logo-white.png'
+import heroImg from '../assets/hero-img.jpg'
+
+
 
 
 
@@ -15,10 +20,10 @@ const Landing = () => {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-lg md:text-xl">HR</span>
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center ">
+                <img src={logo} alt="logo" />
               </div>
-              <span className="text-lg md:text-xl font-bold">HireReady</span>
+              <h1 className="text-lg md:text-xl font-bold text-gray-700"><span className="text-[#4589f7]">Hire</span>Ready</h1>
             </div>
 
             {/* Desktop Nav */}
@@ -102,7 +107,7 @@ const Landing = () => {
           {/* Hero Image */}
           <div className="flex justify-center lg:justify-end">
             <img
-              src="/src/assets/hero-image.jpg"
+              src={heroImg}
               alt="Interview preparation"
               className="w-full max-w-[450px] sm:max-w-[550px] rounded-2xl shadow-2xl"
             />
@@ -268,10 +273,10 @@ const Landing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div className="md:col-span-2 text-center md:text-left">
               <div className="flex items-center gap-2 mb-4 justify-center md:justify-start">
-                <div className="w-10 h-10 rounded-lg bg-linear-to-br from-[hsl(217,91%,60%)] to-[hsl(217,91%,70%)] flex items-center justify-center">
-                  <span className="font-bold text-xl">HR</span>
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center ">
+                  <img src={whiteLogo} alt="logo" />
                 </div>
-                <span className="text-xl font-bold">HireReady</span>
+                <h1 className="text-lg md:text-xl font-bold text-white"><span className="text-[#4589f7]">Hire</span>Ready</h1>
               </div>
               <p className="opacity-80 mb-4 text-sm md:text-base">Your AI-powered interview preparation platform</p>
               <div className="flex gap-4 justify-center md:justify-start">

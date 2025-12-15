@@ -1,4 +1,5 @@
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import logo from '../../assets/logo.png'
 
 const Footer = () => {
   return (
@@ -8,10 +9,10 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-lg bg-gradient-hero flex items-center justify-center shadow-soft">
-                <span className="text-white font-bold text-xl">HR</span>
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center ">
+                <img src={logo} alt="logo" />
               </div>
-              <span className="text-xl font-bold">HireReady</span>
+              <h1 className="text-lg md:text-xl font-bold text-gray-700"><span className="text-[#4589f7]">Hire</span>Ready</h1>
             </div>
             <p className="text-secondary-foreground/80">
               Empowering job seekers with AI-driven tools for career success.
@@ -31,7 +32,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          
+
           {/* Product */}
           <div>
             <h3 className="font-semibold mb-4">Product</h3>
@@ -42,7 +43,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-primary transition-colors">Job Resources</a></li>
             </ul>
           </div>
-          
+
           {/* Company */}
           <div>
             <h3 className="font-semibold mb-4">Company</h3>
@@ -53,7 +54,7 @@ const Footer = () => {
               <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
             </ul>
           </div>
-          
+
           {/* Support */}
           <div>
             <h3 className="font-semibold mb-4">Support</h3>
@@ -65,7 +66,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        
+
         <div className="border-t border-secondary-foreground/20 pt-8 text-center text-sm text-secondary-foreground/60">
           <p>&copy; {new Date().getFullYear()} HireReady. All rights reserved.</p>
         </div>

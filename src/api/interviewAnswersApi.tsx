@@ -2,24 +2,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addDoc, collection, query, where, getDocs, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { chatSession } from "../ai/geminiAI";
-import type { AIResponse, UserAnswerData } from "../types/interview"; // يجب التأكد من وجود UserAnswerData
+import type { UserAnswerData } from "../types/interview"; // يجب التأكد من وجود UserAnswerData
+import { aiClient, MODEL_NAME } from "../ai/geminiAI";
 
-// --- AI Generation Helper (Functionally Extracted) ---
-const cleanJsonResponse = (responseText: string) => {
-  let clean = responseText.trim();
-  clean = clean.replace(/(json|```|`)/gi, "");
-  const match = clean.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
-  if (match) clean = match[0];
-  try {
-    return JSON.parse(clean);
-  } catch (err) {
-    console.warn("JSON parse error for AI response:", err, clean);
-    throw err;
-  }
+
+
+const cleanJsonResponse = (text: string) => {
+  return text.replace(/```json|```/g, '').trim();
 };
 
-// 1. Fetch User Answers for Interview (used on load)
+
+
 export const fetchUserAnswers = createAsyncThunk<
   { savedIndices: number[]; answers: UserAnswerData[] },
   { mockIdRef: string; userId: string | null; allQuestions: { question: string }[] }
@@ -54,27 +47,62 @@ export const fetchUserAnswers = createAsyncThunk<
   }
 );
 
+ 
 
-// 2. Generate AI Feedback (Pure function)
+
 export const generateAiFeedbackThunk = createAsyncThunk<
-  AIResponse,
+  { rating: number; feedback: string }, // Explicit return type
   { question: string; correctAns: string; usrAns: string }
 >(
   "answers/generateFeedback",
   async ({ question, correctAns, usrAns }) => {
     const prompt = `
-      Question: "${question}"
-      User Answer: "${usrAns}"
-      Correct Answer: "${correctAns}"
-      Compare the user's answer to the correct answer, provide a rating from 1 to 10 and useful feedback for improvement.
-      Return a JSON object with fields: { "ratings": number, "feedback": string }
-      `;
-    const ai = await chatSession.sendMessage(prompt);
-    const txt = ai.response?.text?.();
-    if (!txt) throw new Error("No AI text");
-    return cleanJsonResponse(txt) as AIResponse;
+      You are an expert technical interviewer.
+      
+      Context:
+      - Question: "${question}"
+      - Correct Answer (Reference): "${correctAns}"
+      - User's Answer: "${usrAns}"
+
+      Task:
+      Compare the User's Answer to the Correct Answer. Assess the accuracy, depth, and clarity.
+      Provide a rating from 1 to 10 (integer) and detailed feedback on how to improve.
+      
+      Output Format:
+      Return a single JSON object strictly in this format (no markdown):
+      { "rating": number, "feedback": "string" }
+    `;
+
+    try {
+      const response = await aiClient.models.generateContent({
+        model: MODEL_NAME,
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          temperature: 0.7, // Lower temperature for more consistent grading
+        },
+      });
+
+      
+      const textResponse = response.text; 
+      
+      if (!textResponse) throw new Error("No AI text response");
+
+      const cleanJson = cleanJsonResponse(textResponse);
+      const parsedData = JSON.parse(cleanJson);
+
+      return {
+        rating: parsedData.rating || parsedData.ratings, // Handle potential key variation
+        feedback: parsedData.feedback
+      };
+
+    } catch (error) {
+      console.error("AI Feedback Error:", error);
+      throw error;
+    }
   }
 );
+
 
 
 // 3. Save User Answer (handles Firebase write)

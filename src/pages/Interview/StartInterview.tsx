@@ -236,15 +236,15 @@ const InterviewPage = () => {
 
     setIsAiGenerating(true);
     try {
-      {/*
-        const result = await dispatch(generateAiFeedbackThunk({
-            question: q.question,
-            correctAns: q.answer,
-            usrAns: answer
-        })).unwrap();
-      */}
 
-      setAiResult(mockEvaluations[activeIndexState]);
+      const result = await dispatch(generateAiFeedbackThunk({
+        question: q.question,
+        correctAns: q.answer,
+        usrAns: answer
+      })).unwrap();
+
+
+      setAiResult(result);
       setUserAnswer(answer.trim());
     } catch (error) {
       console.error("AI Generation Error:", error);
@@ -326,7 +326,7 @@ const InterviewPage = () => {
       setSavedQuestionsIndices(p => [...p, activeIndexState]);
 
       window.alert("Saved successfully. You cannot re-answer this question.");
-      
+
 
       if (activeIndexState < (interview.questions.length - 1)) {
         setActiveIndex(activeIndexState + 1);

@@ -7,10 +7,7 @@ import {
   fetchInterviewById,
   updateInterview,
 } from "../../api/interviewsApi";
-import { chatSession } from "../../ai/geminiAI";
-import { mockQuestions } from "../../data/mock-data";
-//import type { Interview } from "@/types/interview";
-
+import { aiClient, MODEL_NAME } from "../../ai/geminiAI";
 
 
 
@@ -61,33 +58,10 @@ const CreateInterview = () => {
   };
 
 
-  const cleanAiResponse = (responseText: string) => {
-    // Step 1: Trim any surrounding whitespace
-    let cleanText = responseText.trim();
 
-    // Step 2: Remove any occurrences of "json" or code block symbols (``` or `)
-    cleanText = cleanText.replace(/(json|```|`)/g, "");
-
-    // Step 3: Extract a JSON array by capturing text between square brackets
-    const jsonArrayMatch = cleanText.match(/\[.*\]/s);
-    if (jsonArrayMatch) {
-      cleanText = jsonArrayMatch[0];
-    } else {
-      throw new Error("No JSON array found in response");
-    }
-
-    // Step 4: Parse the clean JSON text into an array of objects
-    try {
-      return JSON.parse(cleanText);
-    } catch (error) {
-      throw new Error("Invalid JSON format: " + (error as Error)?.message);
-    }
-  };
-
-  
   const generateAiResponse = async (data: any) => {
     const prompt = `
-        As an experienced prompt engineer, generate a JSON array containing 5 technical interview questions along with detailed answers based on the following job information. Each object in the array should have the fields "question" and "answer", formatted as follows:
+        As an experienced prompt engineer, generate a JSON array containing 5 technical interview questions along with answers based on the following job information. Each object in the array should have the fields "question" and "answer", formatted as follows:
 
         [
           { "question": "<Question text>", "answer": "<Answer text>" },
@@ -101,12 +75,27 @@ const CreateInterview = () => {
         - Tech Stacks: ${data?.techStack}
 
         The questions should assess skills in ${data?.techStack} development and best practices, problem-solving, and experience handling complex requirements. Please format the output strictly as an array of JSON objects without any additional labels, code blocks, or explanations. Return only the JSON array with questions and answers.
+        also the quetions shouldn't be long .. make it something short and need short answer
         `;
 
-    const aiResult = await chatSession.sendMessage(prompt);
-    const cleanedResponse = cleanAiResponse(aiResult.response.text());
+    const response = await aiClient.models.generateContent({
+      model: MODEL_NAME,
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+        temperature: 0.7,
+      },
+    });
 
-    return cleanedResponse;
+
+
+    // استخراج النص وتحويله
+    const textResponse = response.text;
+
+    if (!textResponse) throw new Error("No response from AI");
+
+    const parsedData = JSON.parse(textResponse);
+    return parsedData;
   };
 
 
@@ -144,26 +133,47 @@ const CreateInterview = () => {
 
     setError("");
 
-    const interviewData = {
-      position: form.position,
-      description: form.description,
-      experience: Number(form.experience),
-      techStack: form.techStack,
-      userId:userId,
-      questions: mockQuestions,
-      updateAt: new Date(),
-      createdAt: interviewId ? selectedInterview?.createdAt! : new Date(),
-    };
 
-    
+
+
 
     try {
-      if (interviewId) {
-        await dispatch(updateInterview({ id: interviewId, data: interviewData }));
+      let questions = [];
+
+      if (!interviewId) {
+        const aiData = {
+          position: form.position,
+          description: form.description,
+          experience: Number(form.experience),
+          techStack: form.techStack,
+        };
+
+
+
+        questions = await generateAiResponse(aiData);
+
       } else {
-        await dispatch(createInterview( interviewData ));
-                
+        questions = selectedInterview?.questions || [];
       }
+
+      const interviewData = {
+        position: form.position,
+        description: form.description,
+        experience: Number(form.experience),
+        techStack: form.techStack,
+        userId: userId,
+        questions: questions,
+        updateAt: new Date(),
+        createdAt: interviewId ? selectedInterview?.createdAt! : new Date(),
+      };
+
+
+      if (interviewId) {
+        await dispatch(updateInterview({ id: interviewId, data: interviewData })).unwrap();
+      } else {
+        await dispatch(createInterview(interviewData)).unwrap();
+      }
+
       navigate("/interview");
     } catch (error) {
       setError("An error occurred while saving the interview");
