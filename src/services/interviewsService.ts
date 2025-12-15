@@ -1,5 +1,7 @@
 import { 
-  collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc 
+  collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc, 
+  where,
+  query
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import type { Interview } from "../types/interview";
@@ -7,8 +9,12 @@ import type { Interview } from "../types/interview";
 const interviewsCollection = collection(db, "interviews");
 
 export const interviewsService = {
-  async getAll(): Promise<Interview[]> {
-    const snapshot = await getDocs(interviewsCollection);
+  async getAll(userId: string): Promise<Interview[]> {
+    const userConstraint = where("userId", "==", userId);
+
+    const q = query(interviewsCollection, userConstraint);
+
+    const snapshot = await getDocs(q);
 
     return snapshot.docs.map((d) => ({
       id: d.id,

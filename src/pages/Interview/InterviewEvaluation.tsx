@@ -56,8 +56,9 @@ const EvaluationPage = () => {
         })).unwrap();
         
         const rawAnswers = fetchedAnswersResult.answers || [];
+        // التعديل 2: عكس ترتيب عرض الإجابات
         const sortedAnswers = (rawAnswers as unknown as UserAnswerData[]).sort(
-          (a, b) => (a.questionIndex || 0) - (b.questionIndex || 0)
+          (a, b) => (b.questionIndex || 0) - (a.questionIndex || 0) // عكس الترتيب
         );
 
         setInterviewData(fetchedInterview);
@@ -76,16 +77,16 @@ const EvaluationPage = () => {
 
   // --- Logic Helpers ---
 
-  // تعديل: حساب الدرجة النهائية من 100
+  // التعديل 1: حساب الدرجة النهائية من 10 (المتوسط)
   const calculateOverallScore = () => {
     if (answers.length === 0) return 0;
     
     // جمع التقييمات (التي هي من 1 إلى 10)
     const totalRating = answers.reduce((acc, curr) => acc + curr.rating, 0);
     
-    // حساب المتوسط ثم الضرب في 10 لتحويله لنسبة مئوية
+    // حساب المتوسط
     const averageRating = totalRating / answers.length; 
-    return Math.round(averageRating); // النتيجة ستكون رقم صحيح بين 0 و 100
+    return parseFloat(averageRating.toFixed(1)); // النتيجة برقم عشري واحد بين 0.0 و 10.0
   };
 
   const isInterviewComplete = () => {
@@ -146,7 +147,7 @@ const EvaluationPage = () => {
       {/* Header & Overall Score */}
       <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-6">
          <div>
-            <h1 className="text-3xl font-bold text-gray-800">{interviewData.position} <span className="text-indigo-600">Report</span></h1>
+            <h1 className="text-3xl font-bold text-gray-800">{interviewData.position} <span className="text-indigo-600">interview Report</span></h1>
             <p className="text-gray-500 mt-2 flex items-center gap-2">
               <CheckCircle size={18} className="text-green-500"/> 
               Interview Completed on {new Date().toLocaleDateString()}
@@ -156,20 +157,20 @@ const EvaluationPage = () => {
          <div className="flex flex-col items-center p-4 bg-indigo-50 rounded-lg border border-indigo-100 min-w-[150px]">
             <span className="text-sm font-semibold text-indigo-800 uppercase tracking-wider">Overall Score</span>
             <div className="flex items-center gap-2 mt-1">
-               {/* تعديل: شروط الألوان بناءً على 100 */}
-               <span className={`text-4xl font-extrabold ${overallScore >= 70 ? 'text-green-600' : overallScore >= 40 ? 'text-yellow-600' : 'text-red-600'}`}>
-                 {overallScore}
+               {/* التعديل 1: شروط الألوان بناءً على 10 */}
+               <span className={`text-4xl font-extrabold ${overallScore >= 7 ? 'text-green-600' : overallScore >= 4 ? 'text-yellow-600' : 'text-red-600'}`}>
+                 {overallScore.toFixed(1)} {/* عرض رقم عشري واحد */}
                </span>
-               {/* تعديل: العرض من 100 */}
-               <span className="text-gray-400 text-xl">/ 100</span>
+               {/* التعديل 1: العرض من 10 */}
+               <span className="text-gray-400 text-xl">/ 10</span>
             </div>
             <div className="flex mt-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star 
                   key={star} 
                   size={16} 
-                  // تعديل: معادلة النجوم (الدرجة / 20) لتحويل الـ 100 إلى 5 نجوم
-                  className={`${star <= Math.round(overallScore / 20) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} 
+                  // التعديل 1: معادلة النجوم (الدرجة * 0.5) لتحويل الـ 10 إلى 5 نجوم
+                  className={`${star <= Math.round(overallScore * 0.5) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} 
                 />
               ))}
             </div>
@@ -187,8 +188,9 @@ const EvaluationPage = () => {
       
       <div className="space-y-6">
         {answers.map((ans, index) => {
-          // تعديل: تحويل درجة السؤال الفردي لتكون من 100
-          const questionScore = (ans.rating); 
+          // التعديل 1: درجة السؤال الفردي تبقى كما هي (من 10)
+          const questionScore = ans.rating; 
+          const displayedIndex = interviewData.questions.length - index; // لإعادة ترقيم الأسئلة بشكل صحيح عند العرض المعكوس
 
           return (
             <div key={index} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -196,16 +198,16 @@ const EvaluationPage = () => {
               {/* Question Header */}
               <div className="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-start gap-4">
                 <div>
-                  <span className="text-xs font-bold text-indigo-500 uppercase tracking-wide">Question {index + 1}</span>
+                  <span className="text-xs font-bold text-indigo-500 uppercase tracking-wide">Question {displayedIndex}</span>
                   <h4 className="text-lg font-semibold text-gray-800 mt-1">{ans.question}</h4>
                 </div>
-                {/* تعديل: شروط الألوان للسؤال الفردي */}
+                {/* التعديل 1: شروط الألوان للسؤال الفردي بناءً على 10 */}
                 <div className={`px-3 py-1 rounded-full text-sm font-bold border ${
-                   questionScore >= 70 ? 'bg-green-100 text-green-700 border-green-200' :
-                   questionScore >= 40 ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
+                   questionScore >= 7 ? 'bg-green-100 text-green-700 border-green-200' :
+                   questionScore >= 4 ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
                    'bg-red-100 text-red-700 border-red-200'
                 }`}>
-                  {questionScore}/100
+                  {questionScore}/10
                 </div>
               </div>
 

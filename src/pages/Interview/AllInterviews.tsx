@@ -18,6 +18,9 @@ const Allinterviews = () => {
     (state: RootState) => state.interview
   );
 
+  const currentUserId = useSelector((state: RootState) => state.auth.user?.uid);
+
+
   // -----------------------------
   // Confirmation Modal State
   // -----------------------------
@@ -38,8 +41,10 @@ const Allinterviews = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchInterviews());
-  }, []);
+    if (currentUserId) { 
+      dispatch(fetchInterviews(currentUserId));
+    }
+  }, [dispatch, currentUserId]);
 
   if (loading)
     return (

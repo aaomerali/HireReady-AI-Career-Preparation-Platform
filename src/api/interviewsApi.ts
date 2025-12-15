@@ -3,10 +3,10 @@ import { interviewsService } from "../services/interviewsService";
 import type { Interview } from "../types/interview";
 
 // Fetch all
-export const fetchInterviews = createAsyncThunk<Interview[]>(
+export const fetchInterviews = createAsyncThunk<Interview[], string>( 
   "interviews/fetchAll",
-  async () => {
-    return await interviewsService.getAll();
+  async (userId) => { 
+    return await interviewsService.getAll(userId);
   }
 );
 
