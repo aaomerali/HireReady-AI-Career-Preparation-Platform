@@ -19,12 +19,15 @@ const Landing = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center ">
-                <img src={logo} alt="logo" />
+            <Link to={"/"}>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center ">
+                  <img src={logo} alt="logo" />
+                </div>
+                <h1 className="text-lg md:text-xl font-bold text-gray-700"><span className="text-[#4589f7]">Hire</span>Ready</h1>
               </div>
-              <h1 className="text-lg md:text-xl font-bold text-gray-700"><span className="text-[#4589f7]">Hire</span>Ready</h1>
-            </div>
+            </Link>
+
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex items-center gap-8">

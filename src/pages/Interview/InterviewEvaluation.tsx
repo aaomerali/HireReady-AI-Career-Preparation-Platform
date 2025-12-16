@@ -58,7 +58,7 @@ const EvaluationPage = () => {
         const rawAnswers = fetchedAnswersResult.answers || [];
         // التعديل 2: عكس ترتيب عرض الإجابات
         const sortedAnswers = (rawAnswers as unknown as UserAnswerData[]).sort(
-          (a, b) => (b.questionIndex || 0) - (a.questionIndex || 0) // عكس الترتيب
+          (a, b) => (a.questionIndex || 0) - (b.questionIndex || 0) 
         );
 
         setInterviewData(fetchedInterview);
@@ -190,7 +190,6 @@ const EvaluationPage = () => {
         {answers.map((ans, index) => {
           // التعديل 1: درجة السؤال الفردي تبقى كما هي (من 10)
           const questionScore = ans.rating; 
-          const displayedIndex = interviewData.questions.length - index; // لإعادة ترقيم الأسئلة بشكل صحيح عند العرض المعكوس
 
           return (
             <div key={index} className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
@@ -198,7 +197,7 @@ const EvaluationPage = () => {
               {/* Question Header */}
               <div className="bg-gray-50 p-4 border-b border-gray-100 flex justify-between items-start gap-4">
                 <div>
-                  <span className="text-xs font-bold text-indigo-500 uppercase tracking-wide">Question {displayedIndex}</span>
+                  <span className="text-xs font-bold text-indigo-500 uppercase tracking-wide">Question {index + 1}</span>
                   <h4 className="text-lg font-semibold text-gray-800 mt-1">{ans.question}</h4>
                 </div>
                 {/* التعديل 1: شروط الألوان للسؤال الفردي بناءً على 10 */}

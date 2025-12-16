@@ -72,7 +72,6 @@ const ActionCard: React.FC<ActionCardProps> = ({
 
 
 const Dashboard = () => {
-  // Static Interview Statistics Data
   const interviewStats = [
     {
       icon: <Users className="w-6 h-6 text-blue-600" />,

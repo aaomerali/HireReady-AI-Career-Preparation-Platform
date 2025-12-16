@@ -52,12 +52,6 @@ export default function AppRouter() {
         >
           <Route path="dashboard" element={<Dashboard />} />
 
-          {/* Resume */}
-          {/* 
-          <Route path="resume/builder" element={<Builder />} />
-          <Route path="resume/analyzer" element={<Analyzer />} />
-          <Route path="resume/all" element={<ResumeList />} />
-          */}
 
           {/* Interviews */}
           <Route path="interview/create" element={<CreateInterview />} />
@@ -67,6 +61,14 @@ export default function AppRouter() {
           <Route path="interview/evaluation/:interviewId" element={<InterviewEvaluation />} />
           <Route path="interview" element={<AllInterviews />} />
           <Route path="interview/test" element={<TestRecord />} />
+
+
+           {/* Resume */}
+          {/* 
+          <Route path="resume/builder" element={<Builder />} />
+          <Route path="resume/analyzer" element={<Analyzer />} />
+          <Route path="resume/all" element={<ResumeList />} />
+          */}
 
 
         </Route>
