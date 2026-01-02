@@ -21,9 +21,7 @@ const Allinterviews = () => {
   const currentUserId = useSelector((state: RootState) => state.auth.user?.uid);
 
 
-  // -----------------------------
-  // Confirmation Modal State
-  // -----------------------------
+
   const [showConfirm, setShowConfirm] = useState(false);
   const [interviewToDelete, setInterviewToDelete] = useState<string | null>(null);
 
@@ -45,6 +43,7 @@ const Allinterviews = () => {
       dispatch(fetchInterviews(currentUserId));
     }
   }, [dispatch, currentUserId]);
+
 
   if (loading)
     return (

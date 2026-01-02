@@ -1,25 +1,38 @@
-import { GoogleGenAI } from "@google/genai";
+import { collection, getDocs, where, query } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import type { Interview } from "../../types/interview";
 
+import { useSelector } from "react-redux";
+import type { RootState } from "@/redux/store";
+import { useEffect, useCallback } from "react";
 
-const SpeechToText = () => {
-  
-  
+function Test() {
+  const currentUserId = useSelector((state: RootState) => state.auth.user?.uid);
 
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+  const interviewsService = useCallback(async () => {
+    if (!currentUserId) return;
 
-async function aiRun() {
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: "Explain how AI works in a few words",
-  });
-  console.log(response.text);
-}
+    const interviewsCollection = collection(db, "interviews");
+    const q = query(interviewsCollection, where("userId", "==", currentUserId));
+    const snapshot = await getDocs(q);
+
+    const interviews = snapshot.docs.map((d) => ({
+      id: d.id,
+      ...d.data(),
+    })) as Interview[];
+
+    console.log(interviews);
+  }, [currentUserId]);
+
+  useEffect(() => {
+    interviewsService();
+  }, [interviewsService]);
 
   return (
     <div className="max-w-lg mx-auto py-10 px-4 text-center">
-      <button onClick={aiRun}>run</button>
+      <button onClick={interviewsService}>run</button>
     </div>
   );
-};
+}
 
-export default SpeechToText;
+export default Test;

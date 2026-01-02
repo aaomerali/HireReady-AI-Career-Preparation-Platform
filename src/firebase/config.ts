@@ -18,6 +18,6 @@ export const app = initializeApp(firebaseConfig);
 
 
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const auth = getAuth(app);  //For handling user authentication and session management.
+export const db = getFirestore(app); // for database operations.
+export const storage = getStorage(app); // For managing file uploads, such as images or media.
