@@ -47,6 +47,17 @@ export const fetchUserAnswers = createAsyncThunk<
   }
 );
 
+
+export const fetchAllUserAnswers = async (userId: string) => {
+  const q = query(
+    collection(db, "userAnswers"),
+    where("userId", "==", userId)
+  );
+  const snap = await getDocs(q);
+  return snap.docs.map((doc) => doc.data() as UserAnswerData);
+};
+
+
  
 
 

@@ -6,13 +6,46 @@ import {
   updateInterview,
   deleteInterview,
 } from "../../api/interviewsApi";
+export {
+  fetchInterviews,
+  fetchInterviewById,
+  createInterview,
+  updateInterview,
+  deleteInterview,
+};
+import { fetchAllUserAnswers } from "../../api/interviewAnswersApi";
 import type { InterviewsState } from "../../types/interview";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+
+export const fetchStats = createAsyncThunk(
+  "interviews/fetchStats",
+  async (userId: string) => {
+    const answers = await fetchAllUserAnswers(userId);
+    
+    // Calculate Completed Evaluations (Unique Interviews with answers)
+    const uniqueInterviews = new Set(answers.map((a) => a.mockIdRef));
+    const completedEvaluations = uniqueInterviews.size;
+
+    // Calculate Average Score
+    const totalScore = answers.reduce((acc, curr) => acc + curr.rating, 0);
+    const averageScore = answers.length > 0 ? (totalScore / answers.length).toFixed(1) : "0";
+
+    return {
+      completedEvaluations,
+      averageScore,
+    };
+  }
+);
 
 const initialState: InterviewsState = {
   interviews: [],
   selected: null,
   loading: false,
   error: null,
+  stats: {
+    completedEvaluations: 0,
+    averageScore: "0",
+  },
 };
 
 const interviewsSlice = createSlice({
@@ -52,6 +85,11 @@ const interviewsSlice = createSlice({
         state.interviews = state.interviews.filter(
           (item) => item.id !== action.payload
         );
+      })
+
+      // Stats
+      .addCase(fetchStats.fulfilled, (state, action) => {
+        state.stats = action.payload;
       });
   },
 });

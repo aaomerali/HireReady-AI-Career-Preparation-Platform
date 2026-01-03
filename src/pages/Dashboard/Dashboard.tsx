@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../redux/store";
+import { fetchInterviews, fetchStats } from "../../redux/slices/interviewSlice";
 import {
   Briefcase,
   Users,
@@ -72,25 +76,39 @@ const ActionCard: React.FC<ActionCardProps> = ({
 
 
 const Dashboard = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { interviews, stats } = useSelector(
+    (state: RootState) => state.interview
+  );
+  const { resumes } = useSelector((state: RootState) => state.resume);
+
+  useEffect(() => {
+    if (user?.uid) {
+      dispatch(fetchInterviews(user.uid));
+      dispatch(fetchStats(user.uid));
+    }
+  }, [dispatch, user?.uid]);
+
   const interviewStats = [
     {
       icon: <Users className="w-6 h-6 text-blue-600" />,
       title: "Total Interviews",
-      value: "3",
+      value: interviews.length.toString(),
       description: "Total number of virtual interviews conducted.",
       colorClass: "bg-blue-100",
     },
     {
       icon: <CheckCircle className="w-6 h-6 text-green-600" />,
       title: "Completed Evaluations",
-      value: "2",
+      value: stats?.completedEvaluations?.toString() || "0",
       description: "Interviews that have been fully reviewed.",
       colorClass: "bg-green-100",
     },
     {
       icon: <MessageSquare className="w-6 h-6 text-indigo-600" />,
       title: "Average Score",
-      value: "8.5 / 10",
+      value: `${stats?.averageScore || "0"} / 10`,
       description: "Your average performance score across all interviews.",
       colorClass: "bg-indigo-100",
     },
@@ -101,21 +119,21 @@ const Dashboard = () => {
     {
       icon: <FileText className="w-6 h-6 text-purple-600" />,
       title: "Resumes Created",
-      value: "5",
+      value: resumes.length.toString(),
       description: "Total number of resumes in your profile.",
       colorClass: "bg-purple-100",
     },
     {
       icon: <BarChart2 className="w-6 h-6 text-yellow-600" />,
       title: "Highest Analysis Match",
-      value: "92%",
+      value: "0%", // Dynamic placeholder
       description: "Your best job compatibility score.",
       colorClass: "bg-yellow-100",
     },
     {
       icon: <Briefcase className="w-6 h-6 text-teal-600" />,
       title: "Top Career Focus",
-      value: "Software Engineer",
+      value: "N/A", // Dynamic placeholder
       description: "The most recurring field in your analyses.",
       colorClass: "bg-teal-100",
     },

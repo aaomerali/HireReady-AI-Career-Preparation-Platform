@@ -23,6 +23,10 @@ export interface InterviewsState {
   selected: Interview | null;
   loading: boolean;
   error: string | null;
+  stats?: {
+    completedEvaluations: number;
+    averageScore: string;
+  };
 }
 
 export interface UserAnswerData {
