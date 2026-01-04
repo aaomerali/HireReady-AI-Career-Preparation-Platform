@@ -16,6 +16,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../pages/Dashboard/Dashboard";
 
 // Resume Pages
+import AllResumes from "../pages/Resume/AllResumes";
 /*
 import Builder from "../pages/Resume/Builder";
 import Analyzer from "../pages/Resume/Analyzer";
@@ -64,8 +65,9 @@ export default function AppRouter() {
 
 
            {/* Resume */}
+          
+          <Route path="resume" element={<AllResumes />} />
           {/* 
-          <Route path="resume/builder" element={<Builder />} />
           <Route path="resume/analyzer" element={<Analyzer />} />
           <Route path="resume/all" element={<ResumeList />} />
           */}

@@ -1,56 +1,44 @@
-// src/redux/slices/resumeSlice.ts
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchCVFiles, uploadCVMetadata, deleteCVFile } from "../../api/cvAnalysisApi";
+import type {CVFile} from '../../types/resume'
 
-export interface Resume {
-  id?: string;
-  title: string;
-  content: object;
-  updatedAt: string;
-}
-
-interface ResumeState {
-  resumes: Resume[];
+interface CVState {
+  files: CVFile[];
   loading: boolean;
+  error: string | null;
 }
 
-const initialState: ResumeState = {
-  resumes: [],
+const initialState: CVState = {
+  files: [],
   loading: false,
+  error: null,
 };
 
-const resumeSlice = createSlice({
-  name: "resume",
+const cvAnalysisSlice = createSlice({
+  name: "cvAnalysis",
   initialState,
-  reducers: {
-    setResumes: (state, action: PayloadAction<Resume[]>) => {
-      state.resumes = action.payload;
-    },
-    addResume: (state, action: PayloadAction<Resume>) => {
-      state.resumes.push(action.payload);
-    },
-    updateResume: (state, action: PayloadAction<Resume>) => {
-      const index = state.resumes.findIndex(
-        (res) => res.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.resumes[index] = action.payload;
-      }
-    },
-    deleteResume: (state, action: PayloadAction<string>) => {
-      state.resumes = state.resumes.filter((res) => res.id !== action.payload);
-    },
-    setResumeLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      // Fetch Files
+      .addCase(fetchCVFiles.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCVFiles.fulfilled, (state, action) => {
+        state.loading = false;
+        state.files = action.payload;
+      })
+      
+      // Upload Metadata
+      .addCase(uploadCVMetadata.fulfilled, (state, action) => {
+        state.files.unshift(action.payload);
+      })
+
+      // Delete
+      .addCase(deleteCVFile.fulfilled, (state, action) => {
+        state.files = state.files.filter(f => f.id !== action.payload);
+      });
   },
 });
 
-export const {
-  setResumes,
-  addResume,
-  updateResume,
-  deleteResume,
-  setResumeLoading,
-} = resumeSlice.actions;
-
-export default resumeSlice.reducer;
+export default cvAnalysisSlice.reducer;
