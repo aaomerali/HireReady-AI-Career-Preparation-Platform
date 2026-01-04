@@ -79,7 +79,7 @@ const AllResumes = () => {
             setTargetRole("");
 
             // Success: Navigate to the new report automatically
-            navigate(`/resume/report/${metadataAction.id}`);
+            alert("Resume Analysis Report Created Successfully")
 
         } catch (error) {
             console.error("🛑 Critical Workflow Error:", error);
@@ -159,8 +159,8 @@ const AllResumes = () => {
                                             <Calendar className="w-4 h-4" />
                                             <span dir="rtl">
                                                 {file.createdAt?.toDate ?
-                                                file.createdAt.toDate().toLocaleDateString() :
-                                                new Date(file.createdAt).toLocaleDateString()}
+                                                    file.createdAt.toDate().toLocaleDateString() :
+                                                    new Date(file.createdAt).toLocaleDateString()}
                                             </span>
                                         </div>
                                         <div className="flex items-center gap-3 pt-6 mt-6 border-t border-gray-50">
@@ -190,16 +190,17 @@ const AllResumes = () => {
                 <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
                     <div className="bg-white rounded-[2rem] shadow-2xl w-full max-w-lg overflow-hidden border border-gray-100">
                         <div className="p-8">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Local AI Analysis</h2>
+                            <h2 className="text-2xl font-bold text-gray-900 mb-2">Analyze New Resume</h2>
+                            <p className="text-gray-500 text-sm mb-6">Our AI will evaluate your CV for ATS compatibility and keyword relevance.</p>
 
+                            {/* File Upload Area */}
                             <div
                                 onClick={() => fileInputRef.current?.click()}
                                 className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all
-                                    ${selectedFile ? 'border-green-400 bg-green-50/30' : 'border-gray-200 hover:border-indigo-300'}`}
+                        ${selectedFile ? 'border-green-400 bg-green-50/30' : 'border-gray-200 hover:border-indigo-300'}`}
                             >
                                 <CloudUpload className="w-10 h-10 text-indigo-600 mx-auto mb-3" />
                                 <p className="text-gray-900 font-semibold">{selectedFile ? selectedFile.name : "Choose PDF File"}</p>
-                                <p className="text-xs text-gray-400 mt-2">File text will be extracted locally</p>
                                 <input
                                     ref={fileInputRef}
                                     type="file"
@@ -209,24 +210,56 @@ const AllResumes = () => {
                                 />
                             </div>
 
+                            {/* --- NEW: Detailed File Requirements Section --- */}
+                            <div className="mt-6 bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                                <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3">Upload Guidelines</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                                        <span className="text-xs text-slate-600 font-medium">Format: PDF only</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                                        <span className="text-xs text-slate-600 font-medium">Max Size: 5MB</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                                        <span className="text-xs text-slate-600 font-medium">Language: English</span>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                                        <span className="text-xs text-slate-600 font-medium">Text-based (No scans)</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Target Role Input */}
                             <div className="mt-6">
-                                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Target Role</label>
-                                <input
-                                    type="text"
-                                    value={targetRole}
-                                    onChange={(e) => setTargetRole(e.target.value)}
-                                    placeholder="e.g. Backend Engineer"
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                                />
+                                <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Target Job Role</label>
+                                <div className="relative">
+                                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                                    <input
+                                        type="text"
+                                        value={targetRole}
+                                        onChange={(e) => setTargetRole(e.target.value)}
+                                        placeholder="e.g. Frontend Developer"
+                                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         <div className="bg-gray-50/80 px-8 py-5 flex gap-3 border-t border-gray-100">
-                            <button onClick={() => setShowUploadModal(false)} className="flex-1 px-4 py-3 rounded-xl bg-white border border-gray-200 font-bold">Cancel</button>
+                            <button
+                                onClick={() => { setShowUploadModal(false); setSelectedFile(null); }}
+                                className="flex-1 px-4 py-3 rounded-xl bg-white border border-gray-200 font-bold text-gray-700 hover:bg-gray-100 transition"
+                            >
+                                Cancel
+                            </button>
                             <button
                                 onClick={handleStartAnalysis}
                                 disabled={!selectedFile || isProcessing}
-                                className="flex-1 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition flex items-center justify-center gap-2 disabled:bg-indigo-300"
+                                className="flex-1 px-4 py-3 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition flex items-center justify-center gap-2 disabled:bg-indigo-300 disabled:cursor-not-allowed"
                             >
                                 {isProcessing ? <><Loader2 className="w-5 h-5 animate-spin" /> Processing...</> : "Start Analysis"}
                             </button>
