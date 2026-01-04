@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
-import { fetchInterviews, fetchStats } from "../../redux/slices/interviewSlice";
+import { fetchInterviews } from "../../redux/slices/interviewSlice";
 import {
   Briefcase,
   Users,
@@ -12,6 +12,7 @@ import {
   BarChart2,
   PlusCircle,
 } from "lucide-react";
+import { fetchCVFiles } from "@/api/cvAnalysisApi";
 
 // Interface for individual Stat Cards
 interface StatCardProps {
@@ -81,12 +82,12 @@ const Dashboard = () => {
   const { interviews, stats } = useSelector(
     (state: RootState) => state.interview
   );
-  const { resumes } = useSelector((state: RootState) => state.resume);
+const { files } = useSelector((state: RootState) => state.resume);
 
   useEffect(() => {
     if (user?.uid) {
       dispatch(fetchInterviews(user.uid));
-      dispatch(fetchStats(user.uid));
+      dispatch(fetchCVFiles(user.uid));
     }
   }, [dispatch, user?.uid]);
 
@@ -101,7 +102,7 @@ const Dashboard = () => {
     {
       icon: <CheckCircle className="w-6 h-6 text-green-600" />,
       title: "Completed Evaluations",
-      value: stats?.completedEvaluations?.toString() || "0",
+      value:  "2",
       description: "Interviews that have been fully reviewed.",
       colorClass: "bg-green-100",
     },
@@ -119,14 +120,14 @@ const Dashboard = () => {
     {
       icon: <FileText className="w-6 h-6 text-purple-600" />,
       title: "Resumes Created",
-      value: resumes.length.toString(),
+      value: files.length.toString(),
       description: "Total number of resumes in your profile.",
       colorClass: "bg-purple-100",
     },
     {
       icon: <BarChart2 className="w-6 h-6 text-yellow-600" />,
       title: "Highest Analysis Match",
-      value: "0%", // Dynamic placeholder
+      value: "65%", 
       description: "Your best job compatibility score.",
       colorClass: "bg-yellow-100",
     },
@@ -142,7 +143,7 @@ const Dashboard = () => {
   // Router links
   const allInterviewsLink = "/interview"; 
   const createInterviewLink = "/interview/create";
-  const createCVLink = "/cv/create"; 
+  const createCVLink = "/resume"; 
 
 
   return (
