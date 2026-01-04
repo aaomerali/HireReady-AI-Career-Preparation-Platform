@@ -19,12 +19,6 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import AllResumes from "../pages/Resume/AllResumes";
 import AnalysisReport from "../pages/Resume/AnalysisReport";
 
-/*
-import Builder from "../pages/Resume/Builder";
-import Analyzer from "../pages/Resume/Analyzer";
-import ResumeList from "../pages/Resume/ResumeList";
-*/
-
 
 // Interview Pages
 import CreateInterview from "../pages/Interview/CreateInterview";
@@ -33,6 +27,10 @@ import StartInterview from "../pages/Interview/StartInterview";
 import InterviewEvaluation from "../pages/Interview/InterviewEvaluation";
 import AllInterviews from "../pages/Interview/AllInterviews";
 import TestRecord from "@/pages/Interview/TestRecord";
+
+
+// job resourses Pages
+import JobResources from "@/pages/Resoures/JobResources";
 
 
 export default function AppRouter() {
@@ -66,14 +64,13 @@ export default function AppRouter() {
           <Route path="interview/test" element={<TestRecord />} />
 
 
-           {/* Resume */}
-          
+          {/* Resume */}
           <Route path="resume" element={<AllResumes />} />
           <Route path="resume/report/:resumeId" element={<AnalysisReport />} />
-          {/* 
-          <Route path="resume/analyzer" element={<Analyzer />} />
-          <Route path="resume/all" element={<ResumeList />} />
-          */}
+
+
+          {/* Resourses */}
+          <Route path="resources" element={<JobResources />} />
 
 
         </Route>

@@ -9,4 +9,9 @@ export interface CVFile {
 }
 
 
- 
+ export interface AnalysisData {
+    atsScore: number;
+    improvedSummary: string; // نص السيرة الذاتية المقترح
+    feedback: string;        // تقييم الـ AI العام
+    missingKeywords: string[];
+}

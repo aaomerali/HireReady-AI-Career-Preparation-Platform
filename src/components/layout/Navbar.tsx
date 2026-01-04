@@ -52,7 +52,7 @@ function Navbar() {
     { name: "Dashboard", path: "/dashboard" },
     { name: "Interviews", path: "/interview" }, // لاحظ إزالة /all
     { name: "Resume", path: "/resume" },
-    { name: "Resources", path: "/resources" },
+    { name: "Jobs", path: "/resources" },
   ];
 
   return (
