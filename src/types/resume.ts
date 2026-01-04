@@ -4,5 +4,9 @@ export interface CVFile {
   fileName: string;
   fileUrl: string; 
   targetRole: string;
+  score:number;
   createdAt: any;
 }
+
+
+ 

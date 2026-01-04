@@ -1,6 +1,6 @@
 import { 
   collection, getDocs, addDoc, doc, getDoc, deleteDoc, 
-  where, query, orderBy, serverTimestamp 
+  where, query, serverTimestamp 
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import type {CVFile} from '../types/resume'
@@ -13,7 +13,6 @@ export const cvAnalysisService = {
     const q = query(
       cvFilesCollection, 
       where("userId", "==", userId),
-      orderBy("createdAt", "desc")
     );
 
     const snapshot = await getDocs(q);
