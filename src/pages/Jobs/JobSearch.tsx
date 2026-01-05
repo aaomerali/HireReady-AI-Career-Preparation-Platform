@@ -193,9 +193,9 @@ const JobSearch = () => {
                                                 <MapPin className="w-3.5 h-3.5" />
                                                 <span>{job.locations_derived?.[0] || "Worldwide"}</span>
                                             </div>
-                                            <div className="flex items-center gap-2 text-xs text-gray-400">
+                                            <div  className="flex items-center gap-2 text-xs text-gray-400">
                                                 <Calendar className="w-3.5 h-3.5" />
-                                                <span>Posted on {new Date(job.date_posted).toLocaleDateString()}</span>
+                                                <span dir="rtl">{new Date(job.date_posted).toLocaleDateString()}</span>
                                             </div>
                                         </div>
                                     </div>

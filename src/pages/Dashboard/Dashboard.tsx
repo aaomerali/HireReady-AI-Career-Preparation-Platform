@@ -11,6 +11,7 @@ import {
   CheckCircle,
   BarChart2,
   PlusCircle,
+  Search,
 } from "lucide-react";
 import { fetchCVFiles } from "@/api/cvAnalysisApi";
 
@@ -144,6 +145,7 @@ const { files } = useSelector((state: RootState) => state.resume);
   const allInterviewsLink = "/interview"; 
   const createInterviewLink = "/interview/create";
   const createCVLink = "/resume"; 
+  const jobBoardLink = "/jobs";
 
 
   return (
@@ -168,27 +170,37 @@ const { files } = useSelector((state: RootState) => state.resume);
         <h2 className="text-2xl font-semibold text-gray-800 mb-4 mt-10">
           Quick Actions
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          
           <ActionCard
             icon={<Briefcase className="w-6 h-6" />}
-            title="Create New Interview"
-            subtitle="Start a personalized virtual interview for your career path."
+            title="Create Interview"
+            subtitle="Start a personalized virtual interview."
             to={createInterviewLink}
             gradientClass="bg-gradient-to-r from-blue-600 to-indigo-600"
           />
+
           <ActionCard
             icon={<FileText className="w-6 h-6" />}
-            title="Analyze Resume/CV"
-            subtitle="Upload your resume for job compatibility analysis."
+            title="Analyze CV"
+            subtitle="Get AI feedback on your resume compatibility."
             to={createCVLink}
             gradientClass="bg-gradient-to-r from-teal-500 to-green-600"
           />
+
+          {/* بطاقة البحث عن وظائف الجديدة */}
+          <ActionCard
+            icon={<Search className="w-6 h-6" />}
+            title="Search Jobs"
+            subtitle="Explore active job opportunities and internships."
+            to={jobBoardLink}
+            gradientClass="bg-gradient-to-r from-stone-400 to-stonew-500"
+          />
+          
         </div>
 
-
-        {/* ------------------------------------------- */}
+        
         {/* --- Statistics Section - Virtual Interviews --- */}
-        {/* ------------------------------------------- */}
         <h2 className="text-2xl font-semibold text-gray-800 mb-4 mt-10">
           Virtual Interviews 🎙️
         </h2>

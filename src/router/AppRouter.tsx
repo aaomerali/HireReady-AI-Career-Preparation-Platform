@@ -29,8 +29,8 @@ import AllInterviews from "../pages/Interview/AllInterviews";
 import TestRecord from "@/pages/Interview/TestRecord";
 
 
-// job resourses Pages
-import JobResources from "@/pages/Resoures/JobResources";
+// JobSearch Pages
+import JobSearch from "@/pages/Jobs/JobSearch";
 
 
 export default function AppRouter() {
@@ -69,8 +69,8 @@ export default function AppRouter() {
           <Route path="resume/report/:resumeId" element={<AnalysisReport />} />
 
 
-          {/* Resourses */}
-          <Route path="resources" element={<JobResources />} />
+          {/* JobSearch */}
+          <Route path="jobs" element={<JobSearch />} />
 
 
         </Route>
