@@ -194,7 +194,7 @@ const { files } = useSelector((state: RootState) => state.resume);
             title="Search Jobs"
             subtitle="Explore active job opportunities and internships."
             to={jobBoardLink}
-            gradientClass="bg-gradient-to-r from-stone-400 to-stonew-500"
+            gradientClass="bg-gradient-to-r from-stone-400 to-stone-500"
           />
           
         </div>

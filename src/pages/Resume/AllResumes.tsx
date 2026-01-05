@@ -12,22 +12,25 @@ import { extractTextFromPDF } from '../../utils/pdfExtractor';
 import type { AppDispatch, RootState } from "../../redux/store";
 import type { CVFile } from "@/types/resume";
 
+// 1. استيراد المكتبة
+import toast, { Toaster } from "react-hot-toast";
+
 const AllResumes = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
 
-    // 1. Get real data from Redux
+    // Redux data
     const { files, loading: filesLoading } = useSelector((state: RootState) => state.resume);
     const { user } = useSelector((state: RootState) => state.auth);
 
-    // --- UI State ---
+    // UI State
     const [showUploadModal, setShowUploadModal] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [targetRole, setTargetRole] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    // 2. Fetch files on component mount
+    // Fetch files on component mount
     useEffect(() => {
         if (user?.uid) {
             dispatch(fetchCVFiles(user.uid));
@@ -36,23 +39,25 @@ const AllResumes = () => {
 
     // --- The Main Analysis Logic ---
     const handleStartAnalysis = async () => {
-        if (!selectedFile || !user) return;
+        if (!selectedFile || !user) {
+            toast.error("Please select a file first.");
+            return;
+        }
+
+        // إنشاء معرف فريد للـ toast للتحكم فيه لاحقاً (اختياري)
+        const analysisToast = toast.loading("Processing your CV...");
 
         try {
             setIsProcessing(true);
 
             // STEP 1: Extract Text locally
-            console.log("📄 Extracting text locally from PDF...");
             const resumeText = await extractTextFromPDF(selectedFile);
 
             // STEP 2: Run Gemini Analysis
-            console.log("🤖 Sending text to Gemini AI...");
             const aiResult = await dispatch(generateCVAnalysisThunk({
                 resumeText,
                 targetRole: targetRole || "General Position"
             })).unwrap();
-
-            console.log("✅ Gemini Analysis Complete:", aiResult);
 
             // STEP 3: Save Metadata to Firestore
             const metadataAction = await dispatch(uploadCVMetadata({
@@ -73,30 +78,47 @@ const AllResumes = () => {
                 improvedSummary: aiResult.improvedSummary || aiResult.summary
             })).unwrap();
 
-            // Cleanup
+            // Cleanup UI
             setShowUploadModal(false);
             setSelectedFile(null);
             setTargetRole("");
 
-            // Success: Navigate to the new report automatically
-            alert("Resume Analysis Report Created Successfully")
+            // 2. استبدال Alert بنجاح العملية
+            toast.success("Resume Analysis Report Created Successfully!", {
+                id: analysisToast, // تحديث الـ toast الحالي بدل فتح واحد جديد
+            });
+
+            // توجيه المستخدم للتقرير بعد نجاح العملية (اختياري)
+            // navigate(`/resume/report/${metadataAction.id}`);
 
         } catch (error) {
             console.error("🛑 Critical Workflow Error:", error);
-            alert("Something went wrong during the analysis process.");
+            // 3. استبدال Alert الخطأ
+            toast.error("Something went wrong during the analysis process.", {
+                id: analysisToast,
+            });
         } finally {
             setIsProcessing(false);
         }
     };
 
-    const handleDelete = (id: string) => {
+    const handleDelete = async (id: string) => {
+        // ملاحظة: الـ confirm ما زال يعمل بشكل جيد، ولكن يمكن استبداله بـ Modal لاحقاً
         if (window.confirm("Are you sure you want to delete this analysis?")) {
-            dispatch(deleteCVFile(id));
+            try {
+                await dispatch(deleteCVFile(id)).unwrap();
+                toast.success("Analysis report deleted.");
+            } catch (err) {
+                toast.error("Failed to delete the report.");
+            }
         }
     };
 
     return (
         <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-10 bg-gray-50/30">
+            {/* 4. إضافة مكون الـ Toaster */}
+            <Toaster position="top-center" reverseOrder={false} />
+
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
@@ -210,7 +232,7 @@ const AllResumes = () => {
                                 />
                             </div>
 
-                            {/* --- NEW: Detailed File Requirements Section --- */}
+                            {/* Guidelines */}
                             <div className="mt-6 bg-slate-50 rounded-2xl p-5 border border-slate-100">
                                 <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-3">Upload Guidelines</h3>
                                 <div className="grid grid-cols-2 gap-4">
