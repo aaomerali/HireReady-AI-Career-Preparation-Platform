@@ -1,121 +1,161 @@
-# React + TypeScript + Vite
+# 🚀 HireReady
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HireReady is a modern **React + TypeScript (Vite)** web application for **interview preparation and resume analysis**.  
+It combines AI-powered interview practice, resume feedback, session recording, and job search tools into one platform.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📚 Table of Contents
 
-## React Compiler
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
+- [Development Tips](#development-tips)
+- [Contributing](#contributing)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🤖 AI-assisted interview practice & answer evaluation  
+- 🎥 Save and review recorded interview sessions  
+- 📄 Resume upload, parsing, and detailed feedback reports  
+- 📚 Interview templates & question banks  
+- 🔐 Firebase authentication & file storage  
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-     # HireReady
+---
 
-    HireReady is a React + TypeScript web app (Vite) for interview preparation and resume analysis. It provides AI-powered interview practice, resume parsing & feedback, interview recording, and job search utilities.
+## 🧰 Tech Stack
 
-    ## Table of contents
-    - [Features](#features)
-    - [Tech stack](#tech-stack)
-    - [Getting started](#getting-started)
-    - [Environment / Secrets](#environment--secrets)
-    - [Project structure](#project-structure)
-    - [Development tips](#development-tips)
-    - [Contributing](#contributing)
+**Frontend**
+- React
+- TypeScript
+- Vite
 
-    ## Features
-    - AI-assisted interview practice and answer evaluation
-    - Save and review recorded interview sessions
-    - Resume upload and analysis with detailed reports
-    - Interview templates and question banks
-    - Authentication (Firebase) and file storage for recordings
+**Styling**
+- Tailwind CSS
 
-    ## Tech stack
-    - Frontend: React, TypeScript, Vite
-    - Styling: Tailwind CSS
-    - State: Redux (toolkit)
-    - Backend / APIs: Internal API clients in `src/api/` and `src/services/`
-    - Auth & storage: Firebase (see `src/firebase/`)
+**State Management**
+- Redux Toolkit
 
-    ## Getting started
-    Prerequisites: Node 18+ and a package manager (npm, pnpm, or yarn).
+**Backend / APIs**
+- Internal API clients (`src/api/`, `src/services/`)
 
-    1. Install dependencies
+**Authentication & Storage**
+- Firebase
 
-    ```bash
-    npm install
-    ```
+---
 
-    2. Run the dev server
+## 🚀 Getting Started
 
-    ```bash
-    npm run dev
-    # Open http://localhost:5173 (default Vite port)
-    ```
+### Prerequisites
+- Node.js **18+**
+- npm / pnpm / yarn
 
-    3. Build for production
+### Install dependencies
 
-    ```bash
-    npm run build
-    ```
+```bash
+npm install
+```
 
-    4. Preview the production build locally
+### Start development server
 
-    ```bash
-    npm run preview
-    ```
+```bash
+npm run dev
+```
 
-    ## Environment / Secrets
-    This project uses Firebase. Copy `.env.example` (if present) or create a `.env` and provide the following values (example keys — adapt to your Firebase project):
+Open:
 
-    ```
-    VITE_FIREBASE_API_KEY=your_api_key
-    VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-    VITE_FIREBASE_PROJECT_ID=your_project_id
-    VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-    VITE_FIREBASE_MESSAGING_SENDER_ID=messaging_sender_id
-    VITE_FIREBASE_APP_ID=app_id
-    ```
+```
+http://localhost:5173
+```
 
-    Firebase config is read from `src/firebase/config.ts` — update that file or the environment variables above.
+### Build for production
 
-    ## Project structure (high level)
-    - `src/` — application source
-      - `src/pages/` — page components and routes
-      - `src/components/` — reusable UI and feature components
-      - `src/api/` & `src/services/` — API clients and service wrappers
-      - `src/firebase/` — Firebase init, auth and storage helpers
-      - `src/redux/` — Redux store and slices
-      - `src/utils/` — helpers like `pdfExtractor.ts` and `aiService.ts`
+```bash
+npm run build
+```
 
-    Key files:
-    - `src/main.tsx` — app bootstrap
-    - `src/App.tsx` — top-level app component
-    - `src/router/AppRouter.tsx` — app routes
+### Preview production build
 
-    ## Development tips
-    - Linting and formatting are available via the workspace configs. Run the project's lint scripts if provided.
-    - To test Firebase features locally, ensure your `.env` matches your Firebase project and that Storage rules allow your test user.
-    - For AI-related features, review `src/ai/geminiAI.ts` and the API clients in `src/api/`.
+```bash
+npm run preview
+```
 
-    ## Contributing
-    - Create a branch named `feat/description` or `fix/description`.
-    - Open a PR with a clear description and link to related issues.
+---
 
-    ## Next steps I can help with
-    - Add an `.env.example` file with the exact keys used.
-    - Add usage screenshots or GIFs to the README.
-    - Create a short local setup script to simplify onboarding.
+## 🔐 Environment Variables
 
-    ---
+This project uses **Firebase**.
 
-    If you'd like, I can run the dev server, add an `.env.example`, or add screenshots to this README — tell me which and I'll proceed.
+Create a `.env` file in the root directory:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=messaging_sender_id
+VITE_FIREBASE_APP_ID=app_id
+```
+
+Firebase config is loaded from:
+
+```
+src/firebase/config.ts
+```
+
+---
+
+## 📁 Project Structure
+
+```text
+src/
+ ├── pages/          # Route-based pages
+ ├── components/     # Reusable UI components
+ ├── api/            # API clients
+ ├── services/       # Service wrappers
+ ├── firebase/       # Auth & storage helpers
+ ├── redux/          # Store & slices
+ ├── utils/          # AI helpers, PDF extraction, etc.
+ ├── main.tsx        # App bootstrap
+ ├── App.tsx         # Root component
+ └── router/
+     └── AppRouter.tsx
+```
+
+---
+
+## 💡 Development Tips
+
+- Run lint scripts if configured to keep code clean  
+- Ensure Firebase rules allow test users during development  
+- Review AI logic in:
+
+```
+src/ai/geminiAI.ts
+src/api/
+```
+
+---
+
+## 🤝 Contributing
+
+1. Create a branch:
+
+```bash
+feat/your-feature-name
+fix/your-fix-name
+```
+
+2. Open a Pull Request with:
+- Clear description
+- Linked issue (if any)
+
+---
+
+
+
+⭐ If you find this project useful, consider giving it a star!
