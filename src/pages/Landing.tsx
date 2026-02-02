@@ -136,13 +136,13 @@ const Landing = () => {
               desc: "Get detailed feedback on your resume with AI insights",
               icon: "📄"
             }, {
-              title: "Instant Feedback",
+              title: "finding a job",
               desc: "Receive real-time feedback on your responses",
-              icon: "⚡"
+              icon: "💼"
             }, {
               title: "Industry Questions",
               desc: "Access thousands of real interview questions",
-              icon: "💼"
+              icon: "⚡"
             }, {
               title: "Progress Tracking",
               desc: "Monitor your improvement over time",
