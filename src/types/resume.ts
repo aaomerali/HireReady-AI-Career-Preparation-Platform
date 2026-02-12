@@ -11,7 +11,7 @@ export interface CVFile {
 
  export interface AnalysisData {
     atsScore: number;
-    improvedSummary: string; // نص السيرة الذاتية المقترح
-    feedback: string;        // تقييم الـ AI العام
+      improvedSummary: string; // Suggested resume summary text
+      feedback: string;        // Overall AI feedback
     missingKeywords: string[];
 }

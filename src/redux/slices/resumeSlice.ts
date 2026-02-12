@@ -23,14 +23,14 @@ const cvAnalysisSlice = createSlice({
       // Fetch Files
       .addCase(fetchCVFiles.pending, (state) => {
         state.loading = true;
-        state.error = null; // إعادة ضبط الخطأ عند بدء محاولة جديدة
+        state.error = null; // reset error when starting a new request
       })
       .addCase(fetchCVFiles.fulfilled, (state, action) => {
         state.loading = false;
         state.files = action.payload;
       })
       .addCase(fetchCVFiles.rejected, (state, action) => {
-        state.loading = false; // 👈 هذا ما سيجعل رسالة التحميل تختفي
+        state.loading = false; // 👈 this will make the loading message disappear
         state.error = action.error.message || "Failed to fetch files";
         console.error("Firestore Query Error:", action.error.message);
       })

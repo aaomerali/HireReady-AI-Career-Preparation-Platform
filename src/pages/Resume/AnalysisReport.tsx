@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { 
     AlertCircle, ArrowLeft, FileText, Lightbulb, 
-    MessageSquare, Search, Copy, Check, Target, CheckCircle2, Loader2 
+    Search, Copy, Check, Target, CheckCircle2, Loader2 
 } from "lucide-react";
 
 import { fetchCVAnalysisResultThunk } from "../../api/aiAnalysisApi";
@@ -18,7 +18,7 @@ const AnalysisReport = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     
-    // --- حالة محلية لتخزين البيانات بدلاً من Redux Slice ---
+    // --- Local state to hold data instead of a Redux slice ---
     const [data, setData] = useState<AnalysisData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

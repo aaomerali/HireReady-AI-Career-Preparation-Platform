@@ -8,7 +8,7 @@ import type {CVFile} from '../types/resume'
 const cvFilesCollection = collection(db, "cv_files");
 
 export const cvAnalysisService = {
-  // جلب قائمة السير الذاتية (بدون النتائج الثقيلة)
+  // Fetch list of CVs (without heavy results)
   async getAll(userId: string): Promise<CVFile[]> {
     const q = query(
       cvFilesCollection, 
@@ -30,8 +30,8 @@ export const cvAnalysisService = {
 
   async add(data: Omit<CVFile, "id" | "createdAt">): Promise<string> {
     const res = await addDoc(cvFilesCollection, {
-        ...data,
-        createdAt: serverTimestamp() // استخدام وقت السيرفر
+      ...data,
+      createdAt: serverTimestamp() // use serverTimestamp (server time)
     });
     return res.id;
   },
@@ -39,6 +39,6 @@ export const cvAnalysisService = {
   async remove(id: string) {
     const ref = doc(db, "cv_files", id);
     await deleteDoc(ref);
-    // ملاحظة: يفضل لاحقاً إضافة منطق لحذف التحليل المرتبط بهذا الملف من جدول cv_results أيضاً
+    // Note: consider adding logic later to also delete analysis related to this file from the cv_results collection
   },
 };

@@ -15,7 +15,8 @@ export const uploadCVMetadata = createAsyncThunk<
   Omit<CVFile, "id" | "createdAt">
 >("cvAnalysis/uploadMetadata", async (data) => {
   const id = await cvAnalysisService.add(data);
-  // نرجع البيانات مع المعرف، لاحظ أن createdAt سيتم تحديثه عند الجلب التالي من السيرفر
+  // Return the data with the generated id. Note: `createdAt` will be updated
+  // when the server is fetched again.
   return { id, ...data, createdAt: new Date().toISOString() } as CVFile;
 });
 

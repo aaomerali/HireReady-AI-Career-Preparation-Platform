@@ -1,8 +1,8 @@
-// interviewAnswersApi.tsx (ملف جديد)
+// interviewAnswersApi.tsx (new file)
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { addDoc, collection, query, where, getDocs, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/config";
-import type { UserAnswerData } from "../types/interview"; // يجب التأكد من وجود UserAnswerData
+import type { UserAnswerData } from "../types/interview"; // Ensure `UserAnswerData` type exists
 import { aiClient, MODEL_NAME } from "../ai/geminiAI";
 
 
@@ -132,20 +132,6 @@ export const saveUserAnswerThunk = createAsyncThunk<
 >(
   "answers/saveAnswer",
   async (data) => {
-    // Check duplicate logic (optional, but good practice)
-    {/**
-      const q = query(
-        collection(db, "userAnswers"),
-        where("userId", "==", data.userId || null),
-        where("question", "==", data.question)
-      );
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-          throw new Error("DuplicateAnswerError: You have already saved an answer for this question.");
-      }
-    
-    */}
-
     await addDoc(collection(db, "userAnswers"), {
       mockIdRef: data.mockIdRef,
       question: data.question,

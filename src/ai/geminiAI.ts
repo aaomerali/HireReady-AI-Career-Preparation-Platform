@@ -6,7 +6,7 @@ if (!apiKey) {
   throw new Error("Missing Gemini API Key in .env file");
 }
 
-// 1. إعداد العميل (Client)
+// 1. Initialize the client
 export const aiClient = new GoogleGenAI({ apiKey });
 
 export const MODEL_NAME = "gemini-2.5-flash";

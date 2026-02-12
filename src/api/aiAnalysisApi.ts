@@ -3,13 +3,13 @@ import { addDoc, collection, getDocs, query, serverTimestamp, where } from "fire
 import { db } from "../firebase/config";
 import { aiClient, MODEL_NAME } from "../ai/geminiAI";
 
-// تنظيف استجابة JSON من أي Markdown زائد
+// Clean JSON response from any extra Markdown
 const cleanJsonResponse = (text: string) => {
   return text.replace(/```json|```/g, '').trim();
 };
 
 /**
- * 1. توليد التحليل باستخدام الذكاء الاصطناعي
+ * 1. Generate analysis using AI
  */
 export const generateCVAnalysisThunk = createAsyncThunk<
   {
@@ -41,9 +41,9 @@ export const generateCVAnalysisThunk = createAsyncThunk<
       const response = await aiClient.models.generateContent({
         model: MODEL_NAME,
         contents: prompt,
-        config: {
+          config: {
           responseMimeType: "application/json",
-          temperature: 0.4, // درجة حرارة منخفضة لنتائج أكثر دقة وتقنية
+          temperature: 0.4, // Low temperature for more precise and technical results
         },
       });
 
@@ -61,12 +61,12 @@ export const generateCVAnalysisThunk = createAsyncThunk<
 );
 
 /**
- * 2. حفظ نتيجة التحليل في جدول منفصل (cv_results)
+ * 2. Save analysis result in a separate collection (cv_results)
  */
 export const saveCVAnalysisResultThunk = createAsyncThunk<
   { id: string },
   {
-    resumeId: string; // المرجع للملف الأصلي
+    resumeId: string; // reference to the original file
     userId: string | null;
     atsScore: number;
     feedback: string;
@@ -106,9 +106,9 @@ export const fetchCVAnalysisResultThunk = createAsyncThunk(
         throw new Error("Analysis report not found");
       }
 
-      // نأخذ أول وثيقة تطابق البحث
+      // Take the first document matching the query
       const data = querySnapshot.docs[0].data();
-      return data; // ستكون النتيجة متوفرة في action.payload
+      return data; // result will be available in action.payload
     } catch (error: any) {
       console.error("Fetch Analysis Error:", error.message);
       throw error;

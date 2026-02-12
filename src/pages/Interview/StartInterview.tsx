@@ -15,7 +15,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 // Hooks & UI Imports
 import useSpeechToText, { type ResultType } from "react-hook-speech-to-text";
-import Webcam from "react-webcam";
 import {
   Mic,
   MicOff,

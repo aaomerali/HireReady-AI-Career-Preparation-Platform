@@ -12,7 +12,7 @@ import { extractTextFromPDF } from '../../utils/pdfExtractor';
 import type { AppDispatch, RootState } from "../../redux/store";
 import type { CVFile } from "@/types/resume";
 
-// 1. استيراد المكتبة
+// 1. Import library
 import toast, { Toaster } from "react-hot-toast";
 
 const AllResumes = () => {
@@ -44,7 +44,7 @@ const AllResumes = () => {
             return;
         }
 
-        // إنشاء معرف فريد للـ toast للتحكم فيه لاحقاً (اختياري)
+        // Create a unique toast id for later control (optional)
         const analysisToast = toast.loading("Processing your CV...");
 
         try {
@@ -83,17 +83,17 @@ const AllResumes = () => {
             setSelectedFile(null);
             setTargetRole("");
 
-            // 2. استبدال Alert بنجاح العملية
+            // 2. Replace Alert with success toast
             toast.success("Resume Analysis Report Created Successfully!", {
-                id: analysisToast, // تحديث الـ toast الحالي بدل فتح واحد جديد
+                id: analysisToast, // update the current toast instead of opening a new one
             });
 
-            // توجيه المستخدم للتقرير بعد نجاح العملية (اختياري)
+            // Navigate user to the report after success (optional)
             // navigate(`/resume/report/${metadataAction.id}`);
 
         } catch (error) {
             console.error("🛑 Critical Workflow Error:", error);
-            // 3. استبدال Alert الخطأ
+            // 3. Replace error Alert with toast
             toast.error("Something went wrong during the analysis process.", {
                 id: analysisToast,
             });
@@ -103,7 +103,7 @@ const AllResumes = () => {
     };
 
     const handleDelete = async (id: string) => {
-        // ملاحظة: الـ confirm ما زال يعمل بشكل جيد، ولكن يمكن استبداله بـ Modal لاحقاً
+        // Note: confirm still works fine, but can be replaced with a Modal later
         if (window.confirm("Are you sure you want to delete this analysis?")) {
             try {
                 await dispatch(deleteCVFile(id)).unwrap();
@@ -116,7 +116,7 @@ const AllResumes = () => {
 
     return (
         <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-10 bg-gray-50/30">
-            {/* 4. إضافة مكون الـ Toaster */}
+            {/* 4. Add Toaster component */}
             <Toaster position="top-center" reverseOrder={false} />
 
             <div className="max-w-7xl mx-auto">

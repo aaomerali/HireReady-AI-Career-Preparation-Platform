@@ -56,7 +56,7 @@ const EvaluationPage = () => {
         })).unwrap();
         
         const rawAnswers = fetchedAnswersResult.answers || [];
-        // التعديل 2: عكس ترتيب عرض الإجابات
+        // Change 2: reverse order of displayed answers
         const sortedAnswers = (rawAnswers as unknown as UserAnswerData[]).sort(
           (a, b) => (a.questionIndex || 0) - (b.questionIndex || 0) 
         );
@@ -77,16 +77,16 @@ const EvaluationPage = () => {
 
   // --- Logic Helpers ---
 
-  // التعديل 1: حساب الدرجة النهائية من 10 (المتوسط)
+  // Change 1: calculate final score out of 10 (average)
   const calculateOverallScore = () => {
     if (answers.length === 0) return 0;
     
-    // جمع التقييمات (التي هي من 1 إلى 10)
+    // Sum ratings (which are from 1 to 10)
     const totalRating = answers.reduce((acc, curr) => acc + curr.rating, 0);
     
-    // حساب المتوسط
+    // Calculate average
     const averageRating = totalRating / answers.length; 
-    return parseFloat(averageRating.toFixed(1)); // النتيجة برقم عشري واحد بين 0.0 و 10.0
+    return parseFloat(averageRating.toFixed(1)); // Result with one decimal between 0.0 and 10.0
   };
 
   const isInterviewComplete = () => {
@@ -157,11 +157,11 @@ const EvaluationPage = () => {
          <div className="flex flex-col items-center p-4 bg-indigo-50 rounded-lg border border-indigo-100 min-w-[150px]">
             <span className="text-sm font-semibold text-indigo-800 uppercase tracking-wider">Overall Score</span>
             <div className="flex items-center gap-2 mt-1">
-               {/* التعديل 1: شروط الألوان بناءً على 10 */}
+               {/* Change 1: color conditions based on score out of 10 */}
                <span className={`text-4xl font-extrabold ${overallScore >= 7 ? 'text-green-600' : overallScore >= 4 ? 'text-yellow-600' : 'text-red-600'}`}>
-                 {overallScore.toFixed(1)} {/* عرض رقم عشري واحد */}
+                 {overallScore.toFixed(1)} {/* display one decimal place */}
                </span>
-               {/* التعديل 1: العرض من 10 */}
+               {/* Change 1: display out of 10 */}
                <span className="text-gray-400 text-xl">/ 10</span>
             </div>
             <div className="flex mt-2">
@@ -169,7 +169,7 @@ const EvaluationPage = () => {
                 <Star 
                   key={star} 
                   size={16} 
-                  // التعديل 1: معادلة النجوم (الدرجة * 0.5) لتحويل الـ 10 إلى 5 نجوم
+                  // Adjustment 1: star mapping (score * 0.5) to convert 10 into 5 stars
                   className={`${star <= Math.round(overallScore * 0.5) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`} 
                 />
               ))}
@@ -188,7 +188,7 @@ const EvaluationPage = () => {
       
       <div className="space-y-6">
         {answers.map((ans, index) => {
-          // التعديل 1: درجة السؤال الفردي تبقى كما هي (من 10)
+          // Adjustment 1: individual question score remains as-is (out of 10)
           const questionScore = ans.rating; 
 
           return (
@@ -200,7 +200,7 @@ const EvaluationPage = () => {
                   <span className="text-xs font-bold text-indigo-500 uppercase tracking-wide">Question {index + 1}</span>
                   <h4 className="text-lg font-semibold text-gray-800 mt-1">{ans.question}</h4>
                 </div>
-                {/* التعديل 1: شروط الألوان للسؤال الفردي بناءً على 10 */}
+                {/* Change 1: color conditions for individual question based on 10 */}
                 <div className={`px-3 py-1 rounded-full text-sm font-bold border ${
                    questionScore >= 7 ? 'bg-green-100 text-green-700 border-green-200' :
                    questionScore >= 4 ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :

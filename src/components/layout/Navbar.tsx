@@ -47,10 +47,10 @@ function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // روابط الناف بار الرئيسية (بدون صفحات فرعية)
+  // Main navbar links (no sub-pages)
   const navItems = [
     { name: "Dashboard", path: "/dashboard" },
-    { name: "Interviews", path: "/interview" }, // لاحظ إزالة /all
+    { name: "Interviews", path: "/interview" }, // Note: removed /all
     { name: "Resume", path: "/resume" },
     { name: "Jobs", path: "/jobs" },
   ];

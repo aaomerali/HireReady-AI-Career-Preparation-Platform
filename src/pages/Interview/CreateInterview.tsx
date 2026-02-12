@@ -32,14 +32,14 @@ const CreateInterview = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // جلب بيانات المقابلة عند وجود interviewId
+  // Fetch interview data when interviewId exists
   useEffect(() => {
     if (interviewId) {
       dispatch(fetchInterviewById(interviewId));
     }
   }, [interviewId]);
 
-  // تعبئة البيانات في حالة التعديل
+  // Populate form when editing
   useEffect(() => {
     if (interviewId && selectedInterview) {
       setForm({
@@ -89,7 +89,7 @@ const CreateInterview = () => {
 
 
 
-    // استخراج النص وتحويله
+    // Extract text and transform it
     const textResponse = response.text;
 
     if (!textResponse) throw new Error("No response from AI");

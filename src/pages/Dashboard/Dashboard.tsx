@@ -188,7 +188,7 @@ const { files } = useSelector((state: RootState) => state.resume);
             gradientClass="bg-gradient-to-r from-teal-500 to-green-600"
           />
 
-          {/* بطاقة البحث عن وظائف الجديدة */}
+          {/* New job search card */}
           <ActionCard
             icon={<Search className="w-6 h-6" />}
             title="Search Jobs"
