@@ -1,7 +1,7 @@
 # 🚀 HireReady
 
 HireReady is a modern **React + TypeScript (Vite)** web application for **interview preparation and resume analysis**.  
-It combines AI-powered interview practice, resume feedback, session recording, and job search tools into one platform.
+It combines AI-powered interview practice, resume feedback, and job search tools into one platform.
 
 ![Image Alt](https://github.com/aaomerali/HireReady-AI-Career-Preparation-Platform/blob/main/HireReady%20Image.jpg)
 
@@ -22,9 +22,7 @@ It combines AI-powered interview practice, resume feedback, session recording, a
 ## ✨ Features
 
 - 🤖 AI-assisted interview practice & answer evaluation  
-- 🎥 Save and review recorded interview sessions  
 - 📄 Resume upload, parsing, and detailed feedback reports  
-- 📚 Interview templates & question banks  
 - 🔐 Firebase authentication & file storage  
 
 
